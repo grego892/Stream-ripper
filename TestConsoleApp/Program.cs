@@ -22,7 +22,7 @@ namespace TestConsoleApp
 
             var stream = streamRipperFactory.New(new StreamRipperOptions
             {
-                Url = new Uri("http://stream.radiojavan.com/radiojavan"),
+                Url = new Uri("https://playerservices.streamtheworld.com/api/livestream-redirect/KBEEFM.mp3"),
                 MaxBufferSize = 10 * 1000000    // stop when buffer size passes 10 megabytes
             });
 

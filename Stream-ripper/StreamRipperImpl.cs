@@ -87,8 +87,15 @@ namespace StreamRipper
         /// <summary>
         /// Stream HTTP Radio
         /// </summary>
+        private static readonly int BufferSize = (int)Math.Pow(2, 14);
+        private static readonly byte[] Buffer = new byte[BufferSize];
+        private static readonly StringBuilder MetadataSb = new StringBuilder();
+
         private static void StreamHttpRadio(EventState state, CancellationToken token)
         {
+            var buffer = Buffer;
+            var metadataSb = MetadataSb;
+
             try
             {
                 var request = (HttpWebRequest) WebRequest.Create(state.Url);
@@ -113,12 +120,12 @@ namespace StreamRipper
                     {
                         try
                         {
-                            var buffer = new byte[(uint) Math.Pow(2, 14)];
+                            //var buffer = new byte[(uint) Math.Pow(2, 14)];
                             var metadataLength = 0;
                             var streamPosition = 0;
                             var bufferPosition = 0;
                             var readBytes = 0;
-                            var metadataSb = new StringBuilder();
+                            //var metadataSb = new StringBuilder();
 
                             // Loop forever
                             while (!token.IsCancellationRequested)
@@ -221,7 +228,7 @@ namespace StreamRipper
 
             var data = new byte[length];
 
-            Buffer.BlockCopy(buffer, offset, data, 0, length);
+            System.Buffer.BlockCopy(buffer, offset, data, 0, length);
 
             // Trigger update
             state.EventHandlers.StreamUpdateEventHandlers.Invoke(state, new StreamUpdateEventArg
